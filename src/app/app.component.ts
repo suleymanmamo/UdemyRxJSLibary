@@ -1,36 +1,19 @@
-import { Component } from "@angular/core";
-import { Observable } from "rxjs";
+import { AfterViewInit, Component, ElementRef, ViewChild } from "@angular/core";
+import { fromEvent } from "rxjs";
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.css"],
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit {
   title = "UdemyRxJSLibary";
 
-  constructor() {
-    const myobservable = Observable.create((observer) => {
-      observer.next("sileman e");
-      observer.next("rih u cane");
-      observer.complete();
+  @ViewChild("btn")
+  button: ElementRef;
+  constructor() {}
+  ngAfterViewInit(): void {
+    fromEvent(this.button.nativeElement, "click").subscribe((data) => {
+      console.log(data);
     });
-    myobservable.subscribe(
-      (data) => {
-        console.log(data);
-      },
-      (err) => {},
-      () => {
-        console.log("data yayımı bitti şimdi reklamlar");
-      }
-    );
-    myobservable.subscribe(
-      (data) => {
-        console.log(data);
-      },
-      (err) => {},
-      () => {
-        console.log("data yayımı bitti şimdi reklamlar");
-      }
-    );
   }
 }
