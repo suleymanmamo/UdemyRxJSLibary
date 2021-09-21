@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { from } from "rxjs";
+import { defer, of, timer } from "rxjs";
 
 @Component({
   selector: "app-root",
@@ -16,20 +16,12 @@ export class AppComponent {
     map.set(2, "Kalem");
     map.set(3, "Silgiler");
 
-    const publisher = from(map);
-    this.subscription = publisher.subscribe(
-      (val) => {
-        console.log(`${val[0]} = ${val[1]}`);
-      },
-      (err) => {},
-      () => {
-        console.log("veri alma tamamlandı");
-      }
-    );
+    const publisher = of(new Date());
+    const publisher2 = defer(() => of(new Date()));
+    const timer1 = timer(3000);
+    timer1.subscribe((data) => {
+      publisher.subscribe((val1) => console.log("of => " + val1));
+      publisher2.subscribe((val2) => console.log("defer => " + val2));
+    });
   }
-
-  // bölüm 3:5/2 \\
-  // stop() {
-  //   this.subscription.unsubscribe();
-  // }
 }
