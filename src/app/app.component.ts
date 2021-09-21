@@ -1,7 +1,9 @@
 import { Component } from "@angular/core";
-import { timer } from "rxjs";
+
 // import { of } from "rxjs"; \\
 // import { interval } from "rxjs"; \\
+// import { timer } from "rxjs";
+import { range } from "rxjs";
 
 @Component({
   selector: "app-root",
@@ -31,7 +33,7 @@ export class AppComponent {
     //   }
     // );
     //***********************************************\\
-    // bölüm 3:5\\
+    // bölüm 3:5/1 \\
     // 2 saniye sonra tek işlem yapar
     // const publisher = timer(2000);
     // publisher.subscribe(
@@ -43,11 +45,25 @@ export class AppComponent {
     //     console.log("veri alma tamamlandı");
     //   }
     // );
+    // bölüm 3:5/2 \\
     // 5 saniye sonra 2 saniyede bir değer tekrarlar
-    const publisher = timer(3000, 2000);
+    // const publisher = timer(3000, 2000);
+    // this.subscription = publisher.subscribe(
+    //   (val) => {
+    //     console.log("bu yazı 5 saniye sonra çalışacaktır = " + val);
+    //   },
+    //   (err) => {},
+    //   () => {
+    //     console.log("veri alma tamamlandı");
+    //   }
+    // );
+    //***********************************************\\
+    // bölüm 3:6
+
+    const publisher = range(1, 20);
     this.subscription = publisher.subscribe(
       (val) => {
-        console.log("bu yazı 5 saniye sonra çalışacaktır = " + val);
+        console.log("gelen değer = " + val);
       },
       (err) => {},
       () => {
@@ -56,7 +72,8 @@ export class AppComponent {
     );
   }
 
-  stop() {
-    this.subscription.unsubscribe();
-  }
+  // bölüm 3:5/2 \\
+  // stop() {
+  //   this.subscription.unsubscribe();
+  // }
 }
