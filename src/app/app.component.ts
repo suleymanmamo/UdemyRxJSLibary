@@ -1,6 +1,7 @@
 import { Component } from "@angular/core";
-import { from } from "rxjs";
-import { takeWhile } from "rxjs/operators";
+import { fromEvent, interval } from "rxjs";
+import { throttle } from "rxjs/operators";
+
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
@@ -10,10 +11,15 @@ export class AppComponent {
   title = "UdemyRxJSLibary";
 
   constructor() {
-    from([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19])
-      .pipe(takeWhile((x) => x < 3))
+    const myinterval = interval(1000);
+    // myinterval.pipe(throttle((x) => interval(2000))).subscribe((data) => {
+    //   console.log(data);
+    // });
+
+    fromEvent(document, "click")
+      .pipe(throttle((x) => interval(5000)))
       .subscribe((data) => {
-        console.log(data);
+        console.log(data, "click");
       });
   }
 }
