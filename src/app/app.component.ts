@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { from } from "rxjs";
-import { first } from "rxjs/operators";
+import { filter } from "rxjs/operators";
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
@@ -13,8 +13,14 @@ export class AppComponent {
       5, 10, 15, 20, 50, 100, 200, 300, 350, 400, 750, 800,
     ]);
 
-    myarray.pipe(first((val) => val > 15)).subscribe((data) => {
-      console.log(data);
-    });
+    myarray.pipe(filter((val) => val > 15)).subscribe(
+      (data) => {
+        console.log(data);
+      },
+      (err) => {
+        console.log(err.message);
+      },
+      () => {}
+    );
   }
 }
