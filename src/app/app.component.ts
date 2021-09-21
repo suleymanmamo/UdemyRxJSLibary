@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { from } from "rxjs";
-import { filter } from "rxjs/operators";
+import { single } from "rxjs/operators";
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
@@ -9,11 +9,9 @@ import { filter } from "rxjs/operators";
 export class AppComponent {
   title = "UdemyRxJSLibary";
   constructor() {
-    const myarray = from([
-      5, 10, 15, 20, 50, 100, 200, 300, 350, 400, 750, 800,
-    ]);
+    const myarray = from(["ahmet", "halil", "celil"]);
 
-    myarray.pipe(filter((val) => val > 15)).subscribe(
+    myarray.pipe(single((val) => val == "celil")).subscribe(
       (data) => {
         console.log(data);
       },
