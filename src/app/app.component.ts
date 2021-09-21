@@ -1,26 +1,24 @@
-import { Component } from "@angular/core";
-import { from } from "rxjs";
-import { distinct } from "rxjs/operators";
+import { AfterViewInit, Component, ElementRef, ViewChild } from "@angular/core";
+import { fromEvent } from "rxjs";
+import { debounceTime } from "rxjs/operators";
+
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.css"],
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit {
   title = "UdemyRxJSLibary";
-  constructor() {
-    const myarray = from([
-      5, 10, 15, 20, 50, 100, 200, 300, 350, 400, 750, 800, 300, 10, 50, 350,
-    ]);
 
-    myarray.pipe(distinct()).subscribe(
-      (data) => {
-        console.log(data);
-      },
-      (err) => {
-        console.log(err.message);
-      },
-      () => {}
-    );
+  @ViewChild("textSearch")
+  textSearch: ElementRef;
+  constructor() {}
+
+  ngAfterViewInit(): void {
+    fromEvent<KeyboardEvent>(this.textSearch.nativeElement, "keyup")
+      .pipe(debounceTime(300))
+      .subscribe((data) => {
+        console.log((data.target as HTMLInputElement).value);
+      });
   }
 }
