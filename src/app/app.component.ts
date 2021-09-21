@@ -1,6 +1,6 @@
-import { Component, SkipSelf } from "@angular/core";
-import { fromEvent, interval, timer } from "rxjs";
-import { skipUntil } from "rxjs/operators";
+import { Component } from "@angular/core";
+import { from } from "rxjs";
+import { skipWhile } from "rxjs/operators";
 @Component({
   selector: "app-root",
   templateUrl: "./app.component.html",
@@ -10,15 +10,10 @@ export class AppComponent {
   title = "UdemyRxJSLibary";
 
   constructor() {
-    // const mytimer = interval(1000);
-    // mytimer.pipe(skipUntil(timer(5000))).subscribe((val) => {
-    //   console.log(val);
-    // });
-
-    const myclick = fromEvent(document, "click");
-    const myinterval = interval(1000);
-    myinterval.pipe(skipUntil(myclick)).subscribe((data) => {
-      console.log(data);
-    });
+    from([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 1, 17, 18, 19])
+      .pipe(skipWhile((x) => x < 5))
+      .subscribe((data) => {
+        console.log(data);
+      });
   }
 }
