@@ -14,6 +14,7 @@ import {
   switchMap,
   take,
   toArray,
+  withLatestFrom,
 } from "rxjs/operators";
 
 @Component({
@@ -25,13 +26,11 @@ export class AppComponent {
   title = "UdemyRxJSLibary";
 
   constructor() {
-    forkJoin({
-      ilkistek: ajax.getJSON("https://jsonplaceholder.typicode.com/todos/1"),
-      ikiniciistek: ajax.getJSON(
-        "https://jsonplaceholder.typicode.com/posts/3"
-      ),
-    }).subscribe((data) => {
-      console.log(data);
-    });
+    const myinterval = interval(1000);
+    fromEvent(document, "click")
+      .pipe(withLatestFrom(myinterval))
+      .subscribe((data) => {
+        console.log(data[1]);
+      });
   }
 }
