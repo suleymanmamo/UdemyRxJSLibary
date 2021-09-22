@@ -6,6 +6,7 @@ import {
   map,
   mapTo,
   mergeMap,
+  reduce,
   skip,
   switchMap,
   take,
@@ -21,8 +22,8 @@ export class AppComponent {
   title = "UdemyRxJSLibary";
 
   constructor() {
-    interval(1000)
-      .pipe(skip(3), take(5), toArray())
+    of(1, 2, 3, 4, 5, 6, 7, 8, 9)
+      .pipe(reduce((acc, val) => acc + val))
       .subscribe((data) => {
         console.log(data);
       });
