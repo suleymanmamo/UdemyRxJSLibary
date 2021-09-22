@@ -11,11 +11,6 @@ export class AppComponent {
   title = "UdemyRxJSLibary";
 
   constructor() {
-    // const numbers = from([85, 23, 57, 36, 12, 68, 5, 18, 17, 25, 24, 68]);
-    // numbers.pipe(map((val) => val + 10)).subscribe((data) => {
-    //   console.log(data);
-    // });
-
     const users = from([
       { name: "cabbar", surname: "kökdal", email: "cabbar@gmail.com" },
       { name: "ali hıdır", surname: "meşe", email: "ali.hidir@gmail.com" },
