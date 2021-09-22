@@ -4,6 +4,7 @@ import { ajax } from "rxjs/ajax";
 import {
   concatMap,
   delay,
+  delayWhen,
   map,
   mapTo,
   mergeAll,
@@ -27,10 +28,11 @@ export class AppComponent {
   title = "UdemyRxJSLibary";
 
   constructor() {
-    of(1, 2, 3, 4, 5, 6, 7)
-      .pipe(tap((val) => console.log("gelen data " + val)))
+    ajax
+      .getJSON<any>("https://jsonplaceholder.typicode.com/posts/5")
+      .pipe(delayWhen((val) => fromEvent(document, "click")))
       .subscribe((data) => {
-        console.log(data);
+        console.log(data.userId);
       });
   }
 }
