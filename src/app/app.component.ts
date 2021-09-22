@@ -2,6 +2,7 @@ import { Component } from "@angular/core";
 import { concat, forkJoin, from, fromEvent, interval, merge, of } from "rxjs";
 import { ajax } from "rxjs/ajax";
 import {
+  catchError,
   concatMap,
   delay,
   delayWhen,
@@ -17,6 +18,7 @@ import {
   switchMap,
   take,
   tap,
+  timeout,
   toArray,
   withLatestFrom,
 } from "rxjs/operators";
@@ -30,9 +32,15 @@ export class AppComponent {
   title = "UdemyRxJSLibary";
 
   constructor() {
-    ajax
+    const myajax = ajax
       .getJSON("https://jsonplaceholder.typicode.com/posts/1")
-      .pipe(repeat(4))
+      .pipe(delay(2000));
+
+    myajax
+      .pipe(
+        timeout(3000),
+        catchError((err) => of("3 saniyede data gelmedi"))
+      )
       .subscribe((data) => {
         console.log(data);
       });
