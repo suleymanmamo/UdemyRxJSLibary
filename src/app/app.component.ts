@@ -11,6 +11,7 @@ import {
   mergeAll,
   mergeMap,
   reduce,
+  repeat,
   skip,
   startWith,
   switchMap,
@@ -30,13 +31,8 @@ export class AppComponent {
 
   constructor() {
     ajax
-      .getJSON("https://jsonplaceholder.typicode.com/posts")
-      .pipe(
-        take(5),
-        finalize(() => {
-          console.log("data alma işlemi bitti");
-        })
-      )
+      .getJSON("https://jsonplaceholder.typicode.com/posts/1")
+      .pipe(repeat(4))
       .subscribe((data) => {
         console.log(data);
       });
