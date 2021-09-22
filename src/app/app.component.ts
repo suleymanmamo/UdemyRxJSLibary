@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
-import { from } from "rxjs";
-import { map, mapTo } from "rxjs/operators";
+import { from, of } from "rxjs";
+import { delay, map, mapTo, mergeMap } from "rxjs/operators";
 
 @Component({
   selector: "app-root",
@@ -11,15 +11,17 @@ export class AppComponent {
   title = "UdemyRxJSLibary";
 
   constructor() {
-    const users = from([
-      { name: "cabbar", surname: "kökdal", email: "cabbar@gmail.com" },
-      { name: "ali hıdır", surname: "meşe", email: "ali.hidir@gmail.com" },
-      { name: "arthur", surname: "doyle", email: "arthurdoyle@gmail.com" },
-      { name: "ahmet arif", surname: "meşe", email: "ahmedarifmese@gmail.com" },
-      { name: "sileman", surname: "mamo", email: "adar.suleyman@gmail.com" },
-    ]);
-    users.pipe(mapTo("sabit değer")).subscribe((data) => {
-      console.log(data);
-    });
+    of("z", "b", "c", "f", "r", "w")
+      .pipe(
+        mergeMap((val) =>
+          of(1, 2).pipe(
+            delay(2000),
+            map((num) => val + num)
+          )
+        )
+      )
+      .subscribe((data) => {
+        console.log(data);
+      });
   }
 }
