@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { forkJoin, from, fromEvent, interval, merge, of } from "rxjs";
+import { concat, forkJoin, from, fromEvent, interval, merge, of } from "rxjs";
 import { ajax } from "rxjs/ajax";
 import {
   concatMap,
@@ -26,11 +26,12 @@ export class AppComponent {
   title = "UdemyRxJSLibary";
 
   constructor() {
-    const myinterval = interval(1000);
-    fromEvent(document, "click")
-      .pipe(withLatestFrom(myinterval))
-      .subscribe((data) => {
-        console.log(data[1]);
-      });
+    let myvalues = of(1, 2, 3, 4, 5);
+    let myvalues2 = of(6, 7, 8, 9, 10);
+    let myvalues3 = of(11, 12, 13, 14, 15);
+
+    concat(myvalues, myvalues2, myvalues3).subscribe((data) => {
+      console.log(data);
+    });
   }
 }
