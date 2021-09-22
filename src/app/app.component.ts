@@ -5,6 +5,7 @@ import {
   delay,
   map,
   mapTo,
+  mergeAll,
   mergeMap,
   reduce,
   skip,
@@ -22,10 +23,10 @@ export class AppComponent {
   title = "UdemyRxJSLibary";
 
   constructor() {
-    const myevent = fromEvent(document, "click");
-    const myinterval = interval(1000);
+    const click = fromEvent(document, "click");
+    const mymerge = click.pipe(map((data) => interval(1000)));
 
-    const mymerge = merge(myevent, myinterval).subscribe((data) => {
+    mymerge.pipe(mergeAll()).subscribe((data) => {
       console.log(data);
     });
   }
