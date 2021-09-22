@@ -1,5 +1,6 @@
 import { Component } from "@angular/core";
-import { from, fromEvent, interval, merge, of } from "rxjs";
+import { forkJoin, from, fromEvent, interval, merge, of } from "rxjs";
+import { ajax } from "rxjs/ajax";
 import {
   concatMap,
   delay,
@@ -24,10 +25,13 @@ export class AppComponent {
   title = "UdemyRxJSLibary";
 
   constructor() {
-    from(["ahmet", "mehmet", "hasan", "mahmut"])
-      .pipe(startWith("mirya", "solin"))
-      .subscribe((data) => {
-        console.log(data);
-      });
+    forkJoin({
+      ilkistek: ajax.getJSON("https://jsonplaceholder.typicode.com/todos/1"),
+      ikiniciistek: ajax.getJSON(
+        "https://jsonplaceholder.typicode.com/posts/3"
+      ),
+    }).subscribe((data) => {
+      console.log(data);
+    });
   }
 }
