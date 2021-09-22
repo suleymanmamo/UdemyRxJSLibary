@@ -13,6 +13,7 @@ import {
   startWith,
   switchMap,
   take,
+  tap,
   toArray,
   withLatestFrom,
 } from "rxjs/operators";
@@ -26,12 +27,10 @@ export class AppComponent {
   title = "UdemyRxJSLibary";
 
   constructor() {
-    let myvalues = of(1, 2, 3, 4, 5);
-    let myvalues2 = of(6, 7, 8, 9, 10);
-    let myvalues3 = of(11, 12, 13, 14, 15);
-
-    concat(myvalues, myvalues2, myvalues3).subscribe((data) => {
-      console.log(data);
-    });
+    of(1, 2, 3, 4, 5, 6, 7)
+      .pipe(tap((val) => console.log("gelen data " + val)))
+      .subscribe((data) => {
+        console.log(data);
+      });
   }
 }
