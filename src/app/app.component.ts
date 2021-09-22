@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { from } from "rxjs";
-import { map } from "rxjs/operators";
+import { map, mapTo } from "rxjs/operators";
 
 @Component({
   selector: "app-root",
@@ -18,7 +18,7 @@ export class AppComponent {
       { name: "ahmet arif", surname: "meşe", email: "ahmedarifmese@gmail.com" },
       { name: "sileman", surname: "mamo", email: "adar.suleyman@gmail.com" },
     ]);
-    users.pipe(map((user) => user.name)).subscribe((data) => {
+    users.pipe(mapTo("sabit değer")).subscribe((data) => {
       console.log(data);
     });
   }
