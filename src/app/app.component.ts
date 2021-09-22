@@ -9,6 +9,7 @@ import {
   mergeMap,
   reduce,
   skip,
+  startWith,
   switchMap,
   take,
   toArray,
@@ -23,11 +24,10 @@ export class AppComponent {
   title = "UdemyRxJSLibary";
 
   constructor() {
-    const click = fromEvent(document, "click");
-    const mymerge = click.pipe(map((data) => interval(1000)));
-
-    mymerge.pipe(mergeAll()).subscribe((data) => {
-      console.log(data);
-    });
+    from(["ahmet", "mehmet", "hasan", "mahmut"])
+      .pipe(startWith("mirya", "solin"))
+      .subscribe((data) => {
+        console.log(data);
+      });
   }
 }
