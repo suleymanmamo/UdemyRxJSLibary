@@ -1,6 +1,16 @@
 import { Component } from "@angular/core";
-import { from, of } from "rxjs";
-import { delay, map, mapTo, mergeMap } from "rxjs/operators";
+import { from, interval, of } from "rxjs";
+import {
+  concatMap,
+  delay,
+  map,
+  mapTo,
+  mergeMap,
+  skip,
+  switchMap,
+  take,
+  toArray,
+} from "rxjs/operators";
 
 @Component({
   selector: "app-root",
@@ -11,15 +21,8 @@ export class AppComponent {
   title = "UdemyRxJSLibary";
 
   constructor() {
-    of("z", "b", "c", "f", "r", "w")
-      .pipe(
-        mergeMap((val) =>
-          of(1, 2).pipe(
-            delay(2000),
-            map((num) => val + num)
-          )
-        )
-      )
+    interval(1000)
+      .pipe(skip(3), take(5), toArray())
       .subscribe((data) => {
         console.log(data);
       });
