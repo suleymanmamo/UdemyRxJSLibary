@@ -5,6 +5,7 @@ import {
   concatMap,
   delay,
   delayWhen,
+  finalize,
   map,
   mapTo,
   mergeAll,
@@ -29,10 +30,15 @@ export class AppComponent {
 
   constructor() {
     ajax
-      .getJSON<any>("https://jsonplaceholder.typicode.com/posts/5")
-      .pipe(delayWhen((val) => fromEvent(document, "click")))
+      .getJSON("https://jsonplaceholder.typicode.com/posts")
+      .pipe(
+        take(5),
+        finalize(() => {
+          console.log("data alma işlemi bitti");
+        })
+      )
       .subscribe((data) => {
-        console.log(data.userId);
+        console.log(data);
       });
   }
 }
