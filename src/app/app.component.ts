@@ -14,6 +14,7 @@ import {
   reduce,
   repeat,
   retry,
+  retryWhen,
   skip,
   startWith,
   switchMap,
@@ -33,9 +34,25 @@ export class AppComponent {
   title = "UdemyRxJSLibary";
 
   constructor() {
-    ajax
-      .getJSON("https://jsonplaceholder.typicode.com/posts/1")
-      .pipe(retry(4))
+    let myinterval = interval(1000).pipe(
+      map((val) => {
+        if (val > 6) {
+          throw "değer 6 dan büyük";
+        } else {
+          return val;
+        }
+      })
+    );
+
+    myinterval
+      .pipe(
+        retryWhen((err) =>
+          err.pipe(
+            tap((x) => console.log(x)),
+            delay(3000)
+          )
+        )
+      )
       .subscribe((data) => {
         console.log(data);
       });
