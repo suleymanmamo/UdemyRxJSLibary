@@ -6,6 +6,7 @@ import {
   interval,
   Observable,
   of,
+  ReplaySubject,
   Subject,
 } from "rxjs";
 import { ajax } from "rxjs/ajax";
@@ -20,16 +21,12 @@ export class AppComponent {
   title = "UdemyRxJSLibary";
 
   constructor() {
-    const mysub = new BehaviorSubject<string>("Başlangıç değeri");
+    let mysub = new ReplaySubject(3);
+    mysub.next(1);
+    mysub.next(2);
     mysub.subscribe((data) => console.log("1. subscribe = " + data));
-    mysub.next("1. değer");
-    mysub.subscribe((data) => {
-      console.log("2. subscribe =" + data);
-    });
-    mysub.next("2. değer");
-    mysub.subscribe((data) => {
-      console.log("3. subscribe =" + data);
-    });
-    mysub.complete();
+    mysub.next(3);
+    mysub.next(4);
+    mysub.subscribe((data) => console.log("2. subscribe = " + data));
   }
 }
