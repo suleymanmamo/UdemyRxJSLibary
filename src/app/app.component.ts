@@ -13,6 +13,7 @@ import {
   mergeMap,
   reduce,
   repeat,
+  retry,
   skip,
   startWith,
   switchMap,
@@ -32,15 +33,9 @@ export class AppComponent {
   title = "UdemyRxJSLibary";
 
   constructor() {
-    const myajax = ajax
+    ajax
       .getJSON("https://jsonplaceholder.typicode.com/posts/1")
-      .pipe(delay(2000));
-
-    myajax
-      .pipe(
-        timeout(3000),
-        catchError((err) => of("3 saniyede data gelmedi"))
-      )
+      .pipe(retry(4))
       .subscribe((data) => {
         console.log(data);
       });
