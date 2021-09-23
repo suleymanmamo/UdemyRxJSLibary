@@ -1,5 +1,13 @@
 import { Component } from "@angular/core";
-import { AsyncSubject, concat, interval, Observable, of, Subject } from "rxjs";
+import {
+  AsyncSubject,
+  BehaviorSubject,
+  concat,
+  interval,
+  Observable,
+  of,
+  Subject,
+} from "rxjs";
 import { ajax } from "rxjs/ajax";
 import { catchError, map } from "rxjs/operators";
 
@@ -12,13 +20,16 @@ export class AppComponent {
   title = "UdemyRxJSLibary";
 
   constructor() {
-    const mysub = new AsyncSubject<string>();
-    mysub.subscribe((data) => console.log("1." + data));
-    mysub.next("1. subscribe değer");
+    const mysub = new BehaviorSubject<string>("Başlangıç değeri");
+    mysub.subscribe((data) => console.log("1. subscribe = " + data));
+    mysub.next("1. değer");
     mysub.subscribe((data) => {
-      console.log("2." + data);
+      console.log("2. subscribe =" + data);
     });
-    mysub.next("2. subscribe değer");
+    mysub.next("2. değer");
+    mysub.subscribe((data) => {
+      console.log("3. subscribe =" + data);
+    });
     mysub.complete();
   }
 }
