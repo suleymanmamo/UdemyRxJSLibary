@@ -1,29 +1,7 @@
 import { Component } from "@angular/core";
-import { concat, forkJoin, from, fromEvent, interval, merge, of } from "rxjs";
+import { concat, interval, Observable, of, Subject } from "rxjs";
 import { ajax } from "rxjs/ajax";
-import {
-  catchError,
-  concatMap,
-  delay,
-  delayWhen,
-  finalize,
-  map,
-  mapTo,
-  mergeAll,
-  mergeMap,
-  reduce,
-  repeat,
-  retry,
-  retryWhen,
-  skip,
-  startWith,
-  switchMap,
-  take,
-  tap,
-  timeout,
-  toArray,
-  withLatestFrom,
-} from "rxjs/operators";
+import { catchError, map } from "rxjs/operators";
 
 @Component({
   selector: "app-root",
@@ -34,27 +12,13 @@ export class AppComponent {
   title = "UdemyRxJSLibary";
 
   constructor() {
-    let myinterval = interval(1000).pipe(
-      map((val) => {
-        if (val > 6) {
-          throw "değer 6 dan büyük";
-        } else {
-          return val;
-        }
-      })
-    );
-
-    myinterval
-      .pipe(
-        retryWhen((err) =>
-          err.pipe(
-            tap((x) => console.log(x)),
-            delay(3000)
-          )
-        )
-      )
-      .subscribe((data) => {
-        console.log(data);
-      });
+    const myobservable = new Subject();
+    myobservable.subscribe((data) => {
+      console.log("1." + data);
+    });
+    myobservable.subscribe((data) => {
+      console.log("2." + data);
+    });
+    myobservable.next(Math.floor(Math.random() * 100));
   }
 }
